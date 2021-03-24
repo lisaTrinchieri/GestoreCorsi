@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 import it.polito.tdp.corsi.model.Corso;
 import it.polito.tdp.corsi.model.Model;
+import it.polito.tdp.corsi.model.Studente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -51,6 +52,8 @@ public class FXMLController {
     @FXML
     void corsiPerPeriodo(ActionEvent event) {
     	
+    	txtRisultato.clear();
+    	
     	String periodoStringa = txtPeriodo.getText();
     	Integer periodo;
     	
@@ -79,6 +82,8 @@ public class FXMLController {
 
     @FXML
     void numeroStudenti(ActionEvent event) {
+    	
+    	txtRisultato.clear();
     	
     	String periodoStringa = txtPeriodo.getText();
     	Integer periodo;
@@ -111,11 +116,52 @@ public class FXMLController {
 
     @FXML
     void stampaDivisione(ActionEvent event) {
+    	
+    	txtRisultato.clear();
+    	
+    	if(txtCorso.getText() == null)
+    	{	txtRisultato.setText("Inserire il codice di un corso");
+    	    return; }
+    	
+    	String codice = txtCorso.getText();
+    	
+    	List<String> corsi = this.model.getCodiceCorsi();
+    	
+    	if(!corsi.contains(codice))
+    	{	txtRisultato.setText("Inserire il codice di un corso esistente");
+	        return; }
+    	
+    	List<Studente> studenti = this.model.getStudentiByIndirizzo(codice);
+    	
+    	for(Studente s : studenti) {
+    		txtRisultato.appendText(s.toString());
+    	}
+    	
 
     }
 
     @FXML
     void stampaStudenti(ActionEvent event) {
+    	
+    	txtRisultato.clear();
+    	
+     	if(txtCorso.getText() == null)
+    	{	txtRisultato.setText("Inserire il codice di un corso");
+    	    return; }
+    	
+    	String codice = txtCorso.getText();
+    	
+    	List<String> corsi = this.model.getCodiceCorsi();
+    	
+    	if(!corsi.contains(codice))
+    	{	txtRisultato.setText("Inserire il codice di un corso esistente");
+	        return; }
+    	
+    	List<Studente> studenti = this.model.getStudentiByCorso(codice);
+    	
+    	for(Studente s : studenti) {
+    		txtRisultato.appendText(s.toString());
+    	}
 
     }
 

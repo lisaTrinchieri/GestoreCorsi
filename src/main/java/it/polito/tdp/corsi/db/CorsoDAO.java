@@ -45,6 +45,32 @@ public class CorsoDAO {
 	   
 	}
 	
+	public List<String> getCodiceCorsi() {
+		
+		String sql = "SELECT codins "
+				    + "FROM corso ";
+		
+		List<String> corsi = new ArrayList<String>();
+		
+		try {   Connection conn = DBConnect.getConnection();
+	            PreparedStatement st = conn.prepareStatement(sql);
+	            
+	            ResultSet rs = st.executeQuery();
+			     
+			    while(rs.next()) 
+			    	corsi.add(rs.getString("codins"));
+			     
+			     
+			    st.close();
+			    conn.close(); 
+		  } catch(SQLException e) {
+			   throw new RuntimeException(e);
+			    }
+		   
+		   return corsi;
+		
+	}
+	
 	public Map<Corso, Integer> getIscrittiByPeriodo(Integer periodo) {
 		
 		String sql= "SELECT c.codins, c.nome, c.crediti, c.pd, COUNT(*) AS tot " 
